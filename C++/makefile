@@ -1,7 +1,7 @@
-all: main
+all: Library
 
-main: main.cpp
-	gcc -g -Wall -o main main.cpp
+Library: Library.cpp
+	g++ -g -Wall Library.cpp Book.cpp
 
 clean:
-	rm main
+	rm a.out

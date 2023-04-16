@@ -61,14 +61,17 @@ public class Library {
                library.displayAvailableBooks();
                break;
             case "2":
-               System.out.println("Enter the title of the book you want to check out:");
+               System.out.println("Enter the title of the book you want to check out: ");
                String checkoutTitle = scanner.nextLine();
                library.checkout(checkoutTitle);
                break;
             case "3":
-               System.out.println("");
+               System.out.println("Enter the title of the book you are returning: ");
+               String returnTitle = scanner.nextLine();
+               library.returnBook(returnTitle);
                break;
             default:
+               System.out.println("Invalid choice. Please try again.");
                break;
          }
       }
