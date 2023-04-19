@@ -59,7 +59,7 @@ public class Library {
          switch (choice.toLowerCase()) {
             case "1":
                library.displayAvailableBooks();
-               break;
+               break; //CWE-484: Break statements are utilized in each case for the switch statement
             case "2":
                System.out.println("Enter the title of the book you want to check out: ");
                String checkoutTitle = scanner.nextLine();
@@ -71,6 +71,7 @@ public class Library {
                library.returnBook(returnTitle);
                break;
             default:
+               //CWE-478: A default case is implemented for the multiple condition expression
                System.out.println("Invalid choice. Please try again.");
                break;
          }

@@ -1,7 +1,7 @@
-all: main
+all: quicksort
 
-main: main.c
-	gcc -g -Wall -o main main.c
+quicksort: quicksort.c
+	gcc -g -Wall -o quicksort quicksort.c
 
 clean:
-	rm main
+	rm quicksort
