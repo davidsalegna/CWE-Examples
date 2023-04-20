@@ -2,6 +2,7 @@
 #include <vector>
 #include "Book.h"
 
+//CWE-457: The books vector is initialized to a default value before it is used
 std::vector<Book> books = {
     Book("The Great Gatsby", "F. Scott Fitzgerald", 2),
     Book("To Kill a Mockingbird", "Harper Lee", 3),

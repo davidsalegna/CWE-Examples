@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int n;
+
 // Function to swap two elements
 void swap(int *a, int *b) {
     int temp = *a;
@@ -32,7 +34,13 @@ void quicksort(int arr[], int low, int high) {
 }
 
 // Function to print the array
-void printArray(int arr[], int size) {
+//CWE-231: Accepts extra parameters to be ignored
+//CWE-685: Allows for function calling with incorrect parameter amount
+void printArray(int arr[], int size, ...) {
+    //CWE-232: Ensure that the size value is not undefined
+    if (size == NULL) {
+        return;
+    }
     for (int i = 0; i < size; i++) {
         printf("%d ", arr[i]);
     }
@@ -40,7 +48,6 @@ void printArray(int arr[], int size) {
 }
 
 int main() {
-    int n;
     printf("Enter the size of the array: ");
     scanf("%d", &n);
 
@@ -53,6 +60,9 @@ int main() {
     }
 
     printf("Original array: ");
+    //CWE-686: Function is called using correct argument types (int[], int)
+    //CWE-683: Function is called with correct order of arguments
+    //CWE-688: Function is called with correct references as arguments
     printArray(arr, n);
 
     quicksort(arr, 0, n - 1);

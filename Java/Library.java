@@ -22,6 +22,11 @@ public class Library {
 
    public void checkout(String title) {
       for (Book book : books) {
+         //CWE-486: Classes not compared solely by name
+         if (!book.getClass().equals(Book.class)) {
+            System.out.println("Sorry, an error occurred");
+            return;
+         }
          if (book.getTitle().equalsIgnoreCase(title)) {
             if (book.getNumCopies() > 0) {
                book.setNumCopies(book.getNumCopies() - 1);
@@ -37,6 +42,7 @@ public class Library {
 
    public void returnBook(String title) {
       for (Book book : books) {
+         //CWE-481: Book titled is being compared and not assigned
          if (book.getTitle().equalsIgnoreCase(title)) {
             book.setNumCopies(book.getNumCopies() + 1);
             System.out.println("You have returned \"" + title + "\". Thank you!");
