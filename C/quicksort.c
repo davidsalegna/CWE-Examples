@@ -13,10 +13,14 @@ void swap(int *a, int *b) {
 // Function to partition the array
 int partition(int arr[], int low, int high) {
     int pivot = arr[high]; 
+    // CWE-783: Operator precedence is correctly followed here and throughout the rest of the program,
+    // using parentheses to guarantee operations are done in the desired order.
     int i = (low - 1);   
     for (int j = low; j <= high - 1; j++) {
         if (arr[j] <= pivot) {
             i++;
+            // CWE-787: Modifying an array is done such that there is no real possibility of attempting to
+            // write values out of its bounds.
             swap(&arr[i], &arr[j]);
         }
     }
@@ -48,9 +52,17 @@ void printArray(int arr[], int size, ...) {
 }
 
 int main() {
-    printf("Enter the size of the array: ");
-    scanf("%d", &n);
-
+    do
+    {
+        printf("Enter the size of the array: ");
+        scanf("%d", &n);
+        // CWE-839: The minimum value is checked to protect against any problems that might arise from
+        // an invalid array size.
+        if (n > 100 || n < 1)
+            printf("Size must be a value from 1-100, try again.\n\n");
+    } while (n > 100 || n < 1);
+    
+    // CWE-789: Thanks to the previous block of code, the integer array is ensured to be a reasonable size.
     //CWE-467: sizeof() is not called on a pointer type, but rather a standard value (int)
     int *arr = (int *)malloc(n * sizeof(int)); // Dynamically allocate memory for the array
 
