@@ -3,6 +3,9 @@ import java.util.Scanner;
 
 public class Library {
    private ArrayList<Book> books = new ArrayList<Book>();
+   // Let's assume username and password are not actually stored here, but on another file.
+   private static String username = "test";
+   private static String password = "password1";
 
    public Library() {
       books.add(new Book("The Great Gatsby", "F. Scott Fitzgerald", 3));
@@ -55,32 +58,52 @@ public class Library {
    public static void main(String[] args) {
       Library library = new Library();
       Scanner scanner = new Scanner(System.in);
+      String choice = "";
+      String title;
+      StringBuffer text1 = new StringBuffer("");
+      StringBuffer text2 = new StringBuffer("");
 
       System.out.println("Hello! Welcome to our library. We hope you enjoy your visit!");
+      System.out.print("Please enter your username: ");
+      text1.append(scanner.nextLine());
+      System.out.print("Please enter your password: ");
+      text2.append(scanner.nextLine());
 
-      String choice = "";
-      while (!choice.equalsIgnoreCase("4")) {
-         System.out.print("What would you like to do?\n\t[1] Display available books\n\t[2] Check out a book\n\t[3] Return a book\n\t[4] Quit\nChoice:  ");
-         choice = scanner.nextLine();
-         switch (choice.toLowerCase()) {
-            case "1":
-               library.displayAvailableBooks();
-               break; //CWE-484: Break statements are utilized in each case for the switch statement
-            case "2":
-               System.out.println("Enter the title of the book you want to check out: ");
-               String checkoutTitle = scanner.nextLine();
-               library.checkout(checkoutTitle);
-               break;
-            case "3":
-               System.out.println("Enter the title of the book you are returning: ");
-               String returnTitle = scanner.nextLine();
-               library.returnBook(returnTitle);
-               break;
-            default:
-               //CWE-478: A default case is implemented for the multiple condition expression
-               System.out.println("Invalid choice. Please try again.");
-               break;
+      if (text1.toString().equals(username) && text2.toString().equals(password))
+      {
+         // CWE-201: Sensitive information such as username and password are given little chance to be accessed by other actors before being removed.
+         // CWE-212: Sensitive information such as username and password are properly removed before too much is done with them available.
+         text1.delete(0, text1.length());
+         text2.delete(0, text2.length());
+
+         while (!choice.equalsIgnoreCase("4"))
+         {
+            System.out.print("What would you like to do?\n\t[1] Display available books\n\t[2] Check out a book\n\t[3] Return a book\n\t[4] Quit\nChoice:  ");
+            choice = scanner.nextLine();
+            switch (choice.toLowerCase()) {
+               case "1":
+                  library.displayAvailableBooks();
+                  break; //CWE-484: Break statements are utilized in each case for the switch statement
+               case "2":
+                  System.out.println("Enter the title of the book you want to check out: ");
+                  title = scanner.nextLine();
+                  library.checkout(title);
+                  break;
+               case "3":
+                  System.out.println("Enter the title of the book you are returning: ");
+                  title = scanner.nextLine();
+                  library.returnBook(title);
+                  break;
+               default:
+                  //CWE-478: A default case is implemented for the multiple condition expression
+                  System.out.println("Invalid choice. Please try again.");
+                  break;
+            }
          }
+      }
+      else
+      {
+         System.out.println("Username or password invalid.");
       }
 
       System.out.println("We hope you enjoyed your trip to our library!");
