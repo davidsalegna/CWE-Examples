@@ -6,12 +6,10 @@
 // CWE-480: Proper usage of operators can be observed throughout the code, including arithmetic and logical operators.
 //CWE-457: The books vector is initialized to a default value before it is used
 std::vector<Book> books = {
-    Book("The Great Gatsby", "F. Scott Fitzgerald", 2),
-    Book("To Kill a Mockingbird", "Harper Lee", 3),
-    Book("1984", "George Orwell", 4),
-    Book("Pride and Prejudice", "Jane Austen", 1),
-    Book("Wuthering Heights", "Emily Bronte", 2),
-    Book("The Hobbit", "J.R.R. Tolkien", 3)
+    Book("The Great Gatsby", "F. Scott Fitzgerald", 3),
+    Book("To Kill a Mockingbird", "Harper Lee", 2),
+    Book("1984", "George Orwell", 2),
+    Book("Fahrenheit 451", "Ray Bradbury", 1)
 };
 
 void displayBooks()
@@ -37,12 +35,12 @@ void checkOutBook(std::string title)
             }
             else
             {
-                std::cout << "Sorry, there are no more copies of \"" << book.getTitle() << "\" available." << std::endl;
+                std::cout << "Sorry, there are no copies of \"" << book.getTitle() << "\" available." << std::endl;
             }
             return;
         }
     }
-    std::cout << "Book not found." << std::endl;
+    std::cout << "Sorry, we do not have \"" + title + "\" in our library." << std::endl;
 }
 
 void returnBook(std::string title)
@@ -57,7 +55,7 @@ void returnBook(std::string title)
             {
                 book.setQuantity(book.getQuantity() + 1);
             }
-            std::cout << "You have returned \"" << book.getTitle() << "\" by " << book.getAuthor() << "." << std::endl;
+            std::cout << "You have returned \"" << book.getTitle() << "\". Thank you!" << std::endl;
             return;
         }
     }

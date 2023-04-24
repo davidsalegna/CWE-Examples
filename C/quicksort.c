@@ -38,10 +38,10 @@ void quicksort(int arr[], int low, int high) {
 }
 
 // Function to print the array
-//CWE-231: Accepts extra parameters to be ignored
-//CWE-685: Allows for function calling with incorrect parameter amount
+// CWE-231: Accepts extra parameters to be ignored
+// CWE-685: Allows for function calling with incorrect parameter amount
 void printArray(int arr[], int size, ...) {
-    //CWE-232: Ensure that the size value is not undefined
+    // CWE-232: Ensure that the size value is not undefined
     if (size == NULL) {
         return;
     }
@@ -63,7 +63,7 @@ int main() {
     } while (n > 100 || n < 1);
     
     // CWE-789: Thanks to the previous block of code, the integer array is ensured to be a reasonable size.
-    //CWE-467: sizeof() is not called on a pointer type, but rather a standard value (int)
+    // CWE-467: sizeof() is not called on a pointer type, but rather a standard value (int)
     int *arr = (int *)malloc(n * sizeof(int)); // Dynamically allocate memory for the array
 
     printf("Enter the elements of the array: ");
@@ -72,9 +72,9 @@ int main() {
     }
 
     printf("Original array: ");
-    //CWE-686: Function is called using correct argument types (int[], int)
-    //CWE-683: Function is called with correct order of arguments
-    //CWE-688: Function is called with correct references as arguments
+    // CWE-686: Function is called using correct argument types (int[], int)
+    // CWE-683: Function is called with correct order of arguments
+    // CWE-688: Function is called with correct references as arguments
     printArray(arr, n);
 
     quicksort(arr, 0, n - 1);
@@ -82,8 +82,8 @@ int main() {
     printf("Sorted array: ");
     printArray(arr, n);
 
-    //CWE-415: Free is only called once to avoid double free memory leaks
-    //CWE-416: Free is called at the end of the program so there's no possibility of it being used afterwards
+    // CWE-415: Free is only called once to avoid double free memory leaks
+    // CWE-416: Free is called at the end of the program so there's no possibility of it being used afterwards
     free(arr); // Free the dynamically allocated memory
     return 0;
 }

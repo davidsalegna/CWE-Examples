@@ -25,7 +25,7 @@ public class Library {
 
    public void checkout(String title) {
       for (Book book : books) {
-         //CWE-486: Classes not compared solely by name
+         // CWE-486: Classes not compared solely by name
          if (!book.getClass().equals(Book.class)) {
             System.out.println("Sorry, an error occurred");
             return;
@@ -45,7 +45,7 @@ public class Library {
 
    public void returnBook(String title) {
       for (Book book : books) {
-         //CWE-481: Book titled is being compared and not assigned
+         // CWE-481: Book titled is being compared and not assigned
          if (book.getTitle().equalsIgnoreCase(title)) {
             book.setNumCopies(book.getNumCopies() + 1);
             System.out.println("You have returned \"" + title + "\". Thank you!");
@@ -83,7 +83,7 @@ public class Library {
             switch (choice.toLowerCase()) {
                case "1":
                   library.displayAvailableBooks();
-                  break; //CWE-484: Break statements are utilized in each case for the switch statement
+                  break; // CWE-484: Break statements are utilized in each case for the switch statement
                case "2":
                   System.out.println("Enter the title of the book you want to check out: ");
                   title = scanner.nextLine();
@@ -95,7 +95,7 @@ public class Library {
                   library.returnBook(title);
                   break;
                default:
-                  //CWE-478: A default case is implemented for the multiple condition expression
+                  // CWE-478: A default case is implemented for the multiple condition expression
                   System.out.println("Invalid choice. Please try again.");
                   break;
             }

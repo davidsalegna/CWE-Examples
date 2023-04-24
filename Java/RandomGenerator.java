@@ -6,8 +6,8 @@ public class RandomGenerator {
     // CWE-607: This array is a mutable object and is declared private, protecting its contents.
     private int[] numArray = new int[arraySize];
 
-    //CWE-230: As a minimum value is missing, default is set as 0
-    //CWE-233: Functions are checked to ensure proper handling of parameters
+    // CWE-230: As a minimum value is missing, default is set as 0
+    // CWE-233: Functions are checked to ensure proper handling of parameters
     public int generateRandom(int max) {
         Random rand = new Random();
         int min = 0;
