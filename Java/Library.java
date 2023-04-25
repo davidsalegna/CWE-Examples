@@ -85,7 +85,7 @@ public class Library {
       LocalDate returnDate = LocalDate.now().plusWeeks(2);
       writer.write("RECEIPT\n\n");
       for (Book book : checkedOutBooks) {
-         writer.write("Title: " + book.getTitle() + " by " + book.getAuthor() + "\nRETURN: " + returnDate + "\n\n");
+         writer.write("Title: " + book.getTitle() + " by " + book.getAuthor() + "\nRETURN BY: " + returnDate + "\n\n");
       }
       writer.close();
       System.out.println("Your receipt has been printed.");

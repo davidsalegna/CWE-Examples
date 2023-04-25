@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int n;
 
@@ -54,8 +55,25 @@ void printArray(int arr[], int size, ...) {
 int main() {
     do
     {
-        printf("Enter the size of the array: ");
+        char c;
+        int len;
+        char num_buffer[4];
+        
         scanf("%d", &n);
+
+
+        // printf("Enter the size of the array: ");
+        // fgets(num_buffer, 4, stdin);
+
+        // // Flush stdin
+        // if ((len = strlen(num_buffer)) == 3 && num_buffer[3] != '\n' && num_buffer[3] != EOF) {
+        //     printf("We flushin");
+        //     while ((c = getchar()) != '\n' && c != EOF);
+        // }
+        // sscanf(num_buffer, "%d", &n);
+        // printf("STRING %s", num_buffer);
+        // printf("NUM %d", n);
+
         // CWE-839: The minimum value is checked to protect against any problems that might arise from
         // an invalid array size.
         if (n > 100 || n < 1)

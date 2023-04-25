@@ -1,20 +1,25 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
+#include <iostream>
+#include <ctime>
 #include "Book.h"
 
 // CWE-480: Proper usage of operators can be observed throughout the code, including arithmetic and logical operators.
 //CWE-457: The books vector is initialized to a default value before it is used
-std::vector<Book> books = {
+std::vector<Book> availableBooks = {
     Book("The Great Gatsby", "F. Scott Fitzgerald", 3),
     Book("To Kill a Mockingbird", "Harper Lee", 2),
     Book("1984", "George Orwell", 2),
     Book("Fahrenheit 451", "Ray Bradbury", 1)
 };
 
+std::vector<Book> checkedOutBooks = {};
+
 void displayBooks()
 {
-    for (auto& book : books)
+    for (auto& book : availableBooks)
     {
         std::cout << "\"" << book.getTitle() << "\" by " << book.getAuthor() << " (" << book.getQuantity() << " available)" << std::endl;
     }
@@ -24,13 +29,15 @@ void checkOutBook(std::string title)
 {
     // CWE-480: Proper usage of operators can be observed throughout the code, particularly arithmetic and logical operators.
     // CWE-483: Proper block delimitation can also be observed throughout the code, particularly with if statements.
-    for (auto& book : books)
+    for (auto& book : availableBooks)
     {
         if (book.getTitle() == title)
         {
             if (book.getQuantity() > 0)
             {
                 book.setQuantity(book.getQuantity() - 1);
+                // Add book to checkedOutBooks
+                checkedOutBooks.push_back(Book(book.getTitle(), book.getAuthor(), 1));
                 std::cout << "You have checked out \"" << book.getTitle() << "\" by " << book.getAuthor() << "." << std::endl;
             }
             else
@@ -45,7 +52,7 @@ void checkOutBook(std::string title)
 
 void returnBook(std::string title)
 {
-    for (auto& book : books)
+    for (auto& book : availableBooks)
     {
         if (book.getTitle() == title)
         {
@@ -55,12 +62,56 @@ void returnBook(std::string title)
             {
                 book.setQuantity(book.getQuantity() + 1);
             }
-            std::cout << "You have returned \"" << book.getTitle() << "\". Thank you!" << std::endl;
+            bool flag = false;
+            for (int i = 0; i < ((int) checkedOutBooks.size()); i++) {
+                if (checkedOutBooks[i].getTitle().compare(title) == 0) {
+                    checkedOutBooks.erase(checkedOutBooks.begin() + i);
+                    flag = true;
+                }
+            }
+            if (flag) {
+                book.setQuantity(book.getQuantity() + 1);
+                std::cout << "You have returned \"" << book.getTitle() << "\". Thank you!" << std::endl;
+            } else {
+                std::cout << "Sorry, you don't have \"" << title << "\" checked out." << std::endl;
+            }
             return;
         }
     }
     std::cout << "Book not found." << std::endl;
 }
+
+void printReceipt()
+{
+    std::time_t t = std::time(nullptr);
+    std::tm* now = std::localtime(&t);
+    std::tm returnDate = *now;
+    returnDate.tm_mday += 14;
+    std::mktime(&returnDate);
+
+    // Open output file stream
+    std::ofstream outFile("receipt.txt");
+
+    // CWE-397: Throws a specific error (not just exception)
+    if (!(outFile.is_open())) {
+        std::runtime_error("Could not open file");
+    }
+
+    // Write receipt header
+    outFile << "RECEIPT:\n\n";
+
+    // Write book titles and return date
+    for (auto& book : checkedOutBooks) {
+        outFile << book.getTitle() << "\nRETURN BY: "
+                << returnDate.tm_year + 1900 << "/"
+                << returnDate.tm_mon + 1 << "/"
+                << returnDate.tm_mday << "\n\n";
+    }
+
+    // Close output file stream
+    outFile.close();
+}
+
 
 int main()
 {
@@ -72,7 +123,7 @@ int main()
 
     while (usingLibrary)
     {
-        std::cout << "What would you like to do?\n\t[1] Display available books\n\t[2] Check out a book\n\t[3] Return a book\n\t[4] Quit\nChoice:  ";
+        std::cout << "What would you like to do?\n\t[1] Display available books\n\t[2] Check out a book\n\t[3] Return a book\n\t[4] Print receipt\n\t[5] Quit\nChoice:  ";
         std::cin >> input;
         try
         {
@@ -95,18 +146,27 @@ int main()
                 getline(std::cin, input);
                 checkOutBook(input);
                 break;
-
             case 3:
                 std::cout << "Enter the title of the book: ";
                 std::cin.ignore();
                 getline(std::cin, input);
                 returnBook(input);
                 break;
-        
             case 4:
+                // CWE-248: Catches potential exception
+                try {  
+                    printReceipt();
+                    std::cout << "Your receipt has been successfully printed!\n";
+                }
+                // CWE-396: Uses specific error (not just exception) 
+                // CWE-460: Program is in a safe state once exception is caught
+                catch (const std::runtime_error& e) {
+                    std::cout << "Error: " << e.what() << "\n";
+                }
+                break;
+            case 5:
                 usingLibrary = false;
                 break;
-        
             default:
                 std::cout << "Invalid choice. Please try again." << std::endl;
         }
