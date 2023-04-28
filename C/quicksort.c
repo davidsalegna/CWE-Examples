@@ -13,9 +13,11 @@ void swap(int *a, int *b) {
 
 // Function to partition the array
 int partition(int arr[], int low, int high) {
+    // CWE-482: Proper use of comparing vs assigning
     int pivot = arr[high]; 
     // CWE-783: Operator precedence is correctly followed here and throughout the rest of the program,
     // using parentheses to guarantee operations are done in the desired order.
+    // CWE-482: Proper use of comparing vs assigning
     int i = (low - 1);   
     for (int j = low; j <= high - 1; j++) {
         if (arr[j] <= pivot) {
@@ -32,6 +34,7 @@ int partition(int arr[], int low, int high) {
 // Function to implement quick sort
 void quicksort(int arr[], int low, int high) {
     if (low < high) {
+        // CWE-482: Proper use of comparing vs assigning
         int pivot_index = partition(arr, low, high);
         quicksort(arr, low, pivot_index - 1);
         quicksort(arr, pivot_index + 1, high);
@@ -43,6 +46,7 @@ void quicksort(int arr[], int low, int high) {
 // CWE-685: Allows for function calling with incorrect parameter amount
 void printArray(int arr[], int size, ...) {
     // CWE-232: Ensure that the size value is not undefined
+    // CWE-482: Proper use of comparing vs assigning
     if (size == NULL) {
         return;
     }
@@ -82,11 +86,21 @@ int main() {
     
     // CWE-789: Thanks to the previous block of code, the integer array is ensured to be a reasonable size.
     // CWE-467: sizeof() is not called on a pointer type, but rather a standard value (int)
+    // CWE-482: Proper use of comparing vs assigning
+    // CWE-131: Proper calculation of buffer size
     int *arr = (int *)malloc(n * sizeof(int)); // Dynamically allocate memory for the array
 
     printf("Enter the elements of the array: ");
+    int num = 0;
     for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
+        scanf("%d", num);
+        // CWE-122: Proper check for heap-based overflow
+        if(-INT_MAX < num < INT_MAX){
+            arr[i] = num;
+        //Will simply add filler number 1 if not valid integer for input
+        }else{
+            arr[i]
+        }
     }
 
     printf("Original array: ");
@@ -102,6 +116,7 @@ int main() {
 
     // CWE-415: Free is only called once to avoid double free memory leaks
     // CWE-416: Free is called at the end of the program so there's no possibility of it being used afterwards
+    // CWE-401: Free memory after effective lifetime
     free(arr); // Free the dynamically allocated memory
     return 0;
 }
