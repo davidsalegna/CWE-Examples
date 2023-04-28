@@ -5,7 +5,12 @@
 int n;
 
 // Function to swap two elements
-void swap(int *a, int *b) {
+// CWE-374: Checks that the pointers are valid and within the array bounds.
+void swap(int *a, int *b, int low, int high) {
+    if (a == NULL || b == NULL || *a < low || *a > high || *b < low || *b > high) {
+        // Handle the error (e.g. return an error code, terminate the program, etc.)
+        return;
+    }
     int temp = *a;
     *a = *b;
     *b = temp;
@@ -24,10 +29,10 @@ int partition(int arr[], int low, int high) {
             i++;
             // CWE-787: Modifying an array is done such that there is no real possibility of attempting to
             // write values out of its bounds.
-            swap(&arr[i], &arr[j]);
+            swap(&arr[i], &arr[j], low, high);
         }
     }
-    swap(&arr[i + 1], &arr[high]);
+    swap(&arr[i + 1], &arr[high], low, high);
     return (i + 1);
 }
 
@@ -63,6 +68,8 @@ int main() {
         int len;
         char num_buffer[4];
         
+        // CWE-469, CWE-805: As integer 'n' is used to keep track of the size of the array,
+        // calculations are not needed to accurately determine or verify the size of the array.
         scanf("%d", &n);
 
 
@@ -88,6 +95,8 @@ int main() {
     // CWE-467: sizeof() is not called on a pointer type, but rather a standard value (int)
     // CWE-482: Proper use of comparing vs assigning
     // CWE-131: Proper calculation of buffer size
+    // CWE-244: Malloc() is used to allocate memory, instead of realloc() on a previous buffer
+    // which could compromise data stored in it.
     int *arr = (int *)malloc(n * sizeof(int)); // Dynamically allocate memory for the array
 
     printf("Enter the elements of the array: ");
