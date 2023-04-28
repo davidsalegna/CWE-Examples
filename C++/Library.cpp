@@ -6,6 +6,7 @@
 #include <ctime>
 #include "Book.h"
 
+// CWE-122, CWE-124: Using vector to store books automatically manages memory allocation and deallocation dynamically.
 // CWE-480: Proper usage of operators can be observed throughout the code, including arithmetic and logical operators.
 // CWE-457: The books vector is initialized to a default value before it is used
 // CWE-482: Proper use of comparing vs assigning
@@ -29,6 +30,13 @@ void displayBooks()
 
 void checkOutBook(std::string title)
 {
+    // CWE-121: Truncates title length if the input is too long, mitigating stack-based buffer overflow attacks.
+    // Same mitigation is also applied to returnBook().
+    if(title.length() > 30)
+    {
+        title = title.substr(0, 30);
+    }
+
     // CWE-480: Proper usage of operators can be observed throughout the code, particularly arithmetic and logical operators.
     // CWE-483: Proper block delimitation can also be observed throughout the code, particularly with if statements.
     for (auto& book : availableBooks)
@@ -37,6 +45,7 @@ void checkOutBook(std::string title)
         // CWE-595: Proper comparing of object values instead of references
         if (book.getTitle() == title)
         {
+            //CWE-191: Checks if the quantity is greater than 0 before subtracting.
             if (book.getQuantity() > 0)
             {
                 book.setQuantity(book.getQuantity() - 1);
@@ -56,6 +65,11 @@ void checkOutBook(std::string title)
 
 void returnBook(std::string title)
 {
+    if(title.length() > 30)
+    {
+        title = title.substr(0, 30);
+    }
+
     for (auto& book : availableBooks)
     {   
         // CWE-482: Proper use of comparing vs assigning

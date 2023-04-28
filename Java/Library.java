@@ -105,6 +105,14 @@ public class Library {
       System.out.print("Please enter your password: ");
       text2.append(scanner.nextLine());
 
+
+      // Let's also assume here that instead of using an if/else, we can also use a try/catch statement in order to
+      // query a SQL database using the supplied username-password to retrieve info and "log in", with a 
+      // catch statement to supply the user with an error if the login fails.
+      //
+      // CWE-209: In the "else" statement (instead of a catch), we do not generate a message/error that 
+      // supplies the user with sensitive information, like information about the SQL query logic or 
+      // the database like names of tables/columns that could lead to SQL injection.
       if (text1.toString().equals(username) && text2.toString().equals(password)) {
          // CWE-201: Sensitive information such as username and password are given little chance to be accessed by other actors before being removed.
          // CWE-212: Sensitive information such as username and password are properly removed before too much is done with them available.
