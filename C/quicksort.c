@@ -99,7 +99,7 @@ int main() {
             arr[i] = num;
         //Will simply add filler number 1 if not valid integer for input
         }else{
-            arr[i]
+            arr[i];
         }
     }
 
