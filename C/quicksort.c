@@ -63,6 +63,7 @@ void printArray(int arr[], int size, ...) {
 }
 
 int main() {
+    //CWE-242: No use of inherently dangerous function
     do
     {
         char c;
