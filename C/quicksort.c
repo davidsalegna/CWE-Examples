@@ -7,6 +7,11 @@ int n;
 // Function to swap two elements
 // CWE-374: Checks that the pointers are valid and within the array bounds.
 void swap(int *a, int *b, int low, int high) {
+    //CWE-129: Proper validation of recieved indexes
+    if(100 < low || low < 0 || 100 < high || high < 0){
+        //handle error
+        return;
+    }
     // CWE-476: Checks for null pointers to ensure that it does not attempt to dereference a null pointer.
     if (a == NULL || b == NULL || *a < low || *a > high || *b < low || *b > high) {
         // Handle the error (e.g. return an error code, terminate the program, etc.)
@@ -19,6 +24,11 @@ void swap(int *a, int *b, int low, int high) {
 
 // Function to partition the array
 int partition(int arr[], int low, int high) {
+    //CWE-129: Proper validation of recieved indexes
+    if(100 < low || low < 0 || 100 < high || high < 0){
+        //handle error
+        return;
+    }
     // CWE-482: Proper use of comparing vs assigning
     int pivot = arr[high]; 
     // CWE-783: Operator precedence is correctly followed here and throughout the rest of the program,
@@ -39,6 +49,11 @@ int partition(int arr[], int low, int high) {
 
 // Function to implement quick sort
 void quicksort(int arr[], int low, int high) {
+    //CWE-129: Proper validation of recieved indexes
+    if(100 < low || low < 0 || 100 < high || high < 0){
+        //handle error
+        return;
+    }
     if (low < high) {
         // CWE-482: Proper use of comparing vs assigning
         int pivot_index = partition(arr, low, high);
