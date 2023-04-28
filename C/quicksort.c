@@ -7,6 +7,7 @@ int n;
 // Function to swap two elements
 // CWE-374: Checks that the pointers are valid and within the array bounds.
 void swap(int *a, int *b, int low, int high) {
+    // CWE-476: Checks for null pointers to ensure that it does not attempt to dereference a null pointer.
     if (a == NULL || b == NULL || *a < low || *a > high || *b < low || *b > high) {
         // Handle the error (e.g. return an error code, terminate the program, etc.)
         return;

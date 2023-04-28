@@ -88,6 +88,7 @@ void returnBook(std::string title)
             // CWE-482: Proper use of comparing vs assigning
             bool flag = false;
             // CWE-595: Proper comparing of object values instead of references
+            // CWE-466: Uses the size of the vector to ensure that the pointer value does not go out of bounds.
             for (int i = 0; i < ((int) checkedOutBooks.size()); i++) {
                 // CWE-482: Proper use of comparing vs assigning
                 if (checkedOutBooks[i].getTitle().compare(title) == 0) {
@@ -157,6 +158,8 @@ int main()
     {
         std::cout << "What would you like to do?\n\t[1] Display available books\n\t[2] Check out a book\n\t[3] Return a book\n\t[4] Print receipt\n\t[5] Quit\nChoice:  ";
         std::cin >> input;
+        // CWE-192: The try/catch block ensures that the choice is set to 0 in the chance of an 
+        // invalid_argument exception, when the user provides invalid input.
         try
         {
             // CWE-482: Proper use of comparing vs assigning
@@ -170,6 +173,7 @@ int main()
             choice = 0;
         }
 
+        // CWE-561: All case blocks are possible to be executed with a properly included default block; there is no dead code here.
         switch (choice)
         {
             case 1:
