@@ -27,7 +27,7 @@ int partition(int arr[], int low, int high) {
     //CWE-129: Proper validation of recieved indexes
     if(100 < low || low < 0 || 100 < high || high < 0){
         //handle error
-        return;
+        return 0;
     }
     // CWE-482: Proper use of comparing vs assigning
     int pivot = arr[high]; 
@@ -68,7 +68,7 @@ void quicksort(int arr[], int low, int high) {
 void printArray(int arr[], int size, ...) {
     // CWE-232: Ensure that the size value is not undefined
     // CWE-482: Proper use of comparing vs assigning
-    if (size == NULL) {
+    if (size == 0) {
         return;
     }
     for (int i = 0; i < size; i++) {
