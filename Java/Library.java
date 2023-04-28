@@ -81,8 +81,10 @@ public class Library {
 
    // CWE-397: This function throws an adequately-specific exception (versus just Exception)
    public void printReceipt() throws IOException {
+      //CWE-73: No external control over filename or path
       FileWriter writer = new FileWriter("receipt.txt", false);
       LocalDate returnDate = LocalDate.now().plusWeeks(2);
+      //CWE-787: No out of bounds write
       writer.write("RECEIPT\n\n");
       for (Book book : checkedOutBooks) {
          writer.write("Title: " + book.getTitle() + " by " + book.getAuthor() + "\nRETURN BY: " + returnDate + "\n\n");
@@ -101,6 +103,7 @@ public class Library {
 
       System.out.println("Hello! Welcome to our library. We hope you enjoy your visit!");
       System.out.print("Please enter your username: ");
+      //CWE-120: copy of buffers with proper input size
       text1.append(scanner.nextLine());
       System.out.print("Please enter your password: ");
       text2.append(scanner.nextLine());
