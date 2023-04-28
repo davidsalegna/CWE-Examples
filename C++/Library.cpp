@@ -7,7 +7,8 @@
 #include "Book.h"
 
 // CWE-480: Proper usage of operators can be observed throughout the code, including arithmetic and logical operators.
-//CWE-457: The books vector is initialized to a default value before it is used
+// CWE-457: The books vector is initialized to a default value before it is used
+// CWE-482: Proper use of comparing vs assigning
 std::vector<Book> availableBooks = {
     Book("The Great Gatsby", "F. Scott Fitzgerald", 3),
     Book("To Kill a Mockingbird", "Harper Lee", 2),
@@ -21,6 +22,7 @@ void displayBooks()
 {
     for (auto& book : availableBooks)
     {
+        // CWE-595: Proper comparing of object values instead of references
         std::cout << "\"" << book.getTitle() << "\" by " << book.getAuthor() << " (" << book.getQuantity() << " available)" << std::endl;
     }
 }
@@ -30,7 +32,9 @@ void checkOutBook(std::string title)
     // CWE-480: Proper usage of operators can be observed throughout the code, particularly arithmetic and logical operators.
     // CWE-483: Proper block delimitation can also be observed throughout the code, particularly with if statements.
     for (auto& book : availableBooks)
-    {
+    {   
+        // CWE-482: Proper use of comparing vs assigning
+        // CWE-595: Proper comparing of object values instead of references
         if (book.getTitle() == title)
         {
             if (book.getQuantity() > 0)
@@ -53,19 +57,28 @@ void checkOutBook(std::string title)
 void returnBook(std::string title)
 {
     for (auto& book : availableBooks)
-    {
+    {   
+        // CWE-482: Proper use of comparing vs assigning
+        // CWE-595: Proper comparing of object values instead of references
         if (book.getTitle() == title)
         {
             // CWE-120: Check to make sure the value provided in setQuantity is within the size of its (integer) buffer.
             // CWE-125: Checking within the size of a buffer doubles as checking within the bounds of it.
+            // CWE-482: Proper use of comparing vs assigning
+            // CWE-595: Proper comparing of object values instead of references
             if (book.getQuantity() - INT32_MAX != 0)
             {
+                // CWE-595: Proper comparing of object values instead of references
                 book.setQuantity(book.getQuantity() + 1);
             }
+            // CWE-482: Proper use of comparing vs assigning
             bool flag = false;
+            // CWE-595: Proper comparing of object values instead of references
             for (int i = 0; i < ((int) checkedOutBooks.size()); i++) {
+                // CWE-482: Proper use of comparing vs assigning
                 if (checkedOutBooks[i].getTitle().compare(title) == 0) {
                     checkedOutBooks.erase(checkedOutBooks.begin() + i);
+                    // CWE-482: Proper use of comparing vs assigning
                     flag = true;
                 }
             }
@@ -83,6 +96,7 @@ void returnBook(std::string title)
 
 void printReceipt()
 {
+    // CWE-482: Proper use of comparing vs assigning
     std::time_t t = std::time(nullptr);
     std::tm* now = std::localtime(&t);
     std::tm returnDate = *now;
@@ -93,6 +107,7 @@ void printReceipt()
     std::ofstream outFile("receipt.txt");
 
     // CWE-397: Throws a specific error (not just exception)
+    // CWE-595: Proper comparing of object values instead of references
     if (!(outFile.is_open())) {
         std::runtime_error("Could not open file");
     }
@@ -102,6 +117,7 @@ void printReceipt()
 
     // Write book titles and return date
     for (auto& book : checkedOutBooks) {
+        // CWE-595: Proper comparing of object values instead of references
         outFile << book.getTitle() << "\nRETURN BY: "
                 << returnDate.tm_year + 1900 << "/"
                 << returnDate.tm_mon + 1 << "/"
@@ -109,12 +125,14 @@ void printReceipt()
     }
 
     // Close output file stream
+    // CWE-910: Proper use of expired file descriptor
     outFile.close();
 }
 
 
 int main()
 {
+    // CWE-482: Proper use of comparing vs assigning
     int choice = 0;
     bool usingLibrary = true;
     std::string input;
@@ -127,11 +145,14 @@ int main()
         std::cin >> input;
         try
         {
+            // CWE-482: Proper use of comparing vs assigning
+            // CWE-704: Proper use of converting or casting
             choice = stoi(input);
         }
         // CWE-210: If an error occurs, there are no specifics given on why an error occurred other than "invalid choice" at the end of the switch.
         catch(const std::exception& e)
         {
+            // CWE-482: Proper use of comparing vs assigning
             choice = 0;
         }
 
@@ -165,6 +186,7 @@ int main()
                 }
                 break;
             case 5:
+                // CWE-482: Proper use of comparing vs assigning
                 usingLibrary = false;
                 break;
             default:
