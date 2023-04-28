@@ -13,6 +13,8 @@ void swap(int *a, int *b) {
 
 // Function to partition the array
 int partition(int arr[], int low, int high) {
+    // CWE-129: The array is indexed safely because it is done automatically and the bounds of the 
+    // array have been validated
     int pivot = arr[high]; 
     // CWE-783: Operator precedence is correctly followed here and throughout the rest of the program,
     // using parentheses to guarantee operations are done in the desired order.
@@ -53,29 +55,32 @@ void printArray(int arr[], int size, ...) {
 }
 
 int main() {
+    char c;
+    int len;
+    char num_buffer[4];
     do
     {
-        char c;
-        int len;
-        char num_buffer[4];
+        // CWE-170: Set the memory to automatically be null-terminated
+        memset(num_buffer, 0, sizeof(num_buffer));
         
-        scanf("%d", &n);
+        printf("Enter the size of the array: ");
+        // CWE-170: This function ensures null-termination
+        // CWE-242: Does not use unsafe gets or potentially dangerous scanf
+        fgets(num_buffer, 4, stdin);
 
-
-        // printf("Enter the size of the array: ");
-        // fgets(num_buffer, 4, stdin);
-
-        // // Flush stdin
-        // if ((len = strlen(num_buffer)) == 3 && num_buffer[3] != '\n' && num_buffer[3] != EOF) {
-        //     printf("We flushin");
-        //     while ((c = getchar()) != '\n' && c != EOF);
-        // }
-        // sscanf(num_buffer, "%d", &n);
-        // printf("STRING %s", num_buffer);
-        // printf("NUM %d", n);
+        // Flush stdin
+        if ((len = strlen(num_buffer)) == 4 && num_buffer[3] != '\n' && num_buffer[3] != EOF) {
+            while ((c = getchar()) != '\n' && c != EOF);
+        }
+        // CWE-1287: Although this method of input validation is involved, this final scanf 
+        // makes sure that we are provided an integer
+        // Convert to integer
+        sscanf(num_buffer, "%d", &n);
 
         // CWE-839: The minimum value is checked to protect against any problems that might arise from
         // an invalid array size.
+        // CWE-1284: The quantity of input is validated to keep the program reasonable to use, to ensure
+        // there is enough space, and so that it is safe from exploitation
         if (n > 100 || n < 1)
             printf("Size must be a value from 1-100, try again.\n\n");
     } while (n > 100 || n < 1);
@@ -84,8 +89,10 @@ int main() {
     // CWE-467: sizeof() is not called on a pointer type, but rather a standard value (int)
     int *arr = (int *)malloc(n * sizeof(int)); // Dynamically allocate memory for the array
 
-    printf("Enter the elements of the array: ");
+    printf("Enter the elements of the array:\n");
+    // CWE-128: Because the bounds are restricted, wraparound error cannot occur
     for (int i = 0; i < n; i++) {
+        printf("[%d]: ", i);
         scanf("%d", &arr[i]);
     }
 

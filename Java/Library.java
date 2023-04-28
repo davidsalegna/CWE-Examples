@@ -36,6 +36,9 @@ public class Library {
             System.out.println("Sorry, an error occurred");
             return;
          }
+         // CWE-1285: We don't allow the user to index the books directly, instead
+         // we allow them to search by title, and we validate that search, thus protecting
+         // the system
          if (book.getTitle().equalsIgnoreCase(title)) {
             if (book.getNumCopies() > 0) {
                book.setNumCopies(book.getNumCopies() - 1);
@@ -71,6 +74,9 @@ public class Library {
                book.setNumCopies(book.getNumCopies() + 1);
                System.out.println("You have returned \"" + title + "\". Thank you!");
             } else {
+               // CWE-1288: We check that a user has such a book checked out. Otherwise,
+               // They could continuously increase the quantity of the books available past
+               // their maximum quantity
                System.out.println("Sorry, you don't have \"" + title + "\" checked out.");
             }
             return;
