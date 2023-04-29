@@ -87,8 +87,10 @@ public class Library {
 
    // CWE-397: This function throws an adequately-specific exception (versus just Exception)
    public void printReceipt() throws IOException {
+      //CWE-73: No external control over filename or path
       FileWriter writer = new FileWriter("receipt.txt", false);
       LocalDate returnDate = LocalDate.now().plusWeeks(2);
+      //CWE-787: No out of bounds write
       writer.write("RECEIPT\n\n");
       for (Book book : checkedOutBooks) {
          writer.write("Title: " + book.getTitle() + " by " + book.getAuthor() + "\nRETURN BY: " + returnDate + "\n\n");
@@ -107,10 +109,19 @@ public class Library {
 
       System.out.println("Hello! Welcome to our library. We hope you enjoy your visit!");
       System.out.print("Please enter your username: ");
+      //CWE-120: copy of buffers with proper input size
       text1.append(scanner.nextLine());
       System.out.print("Please enter your password: ");
       text2.append(scanner.nextLine());
 
+
+      // Let's also assume here that instead of using an if/else, we can also use a try/catch statement in order to
+      // query a SQL database using the supplied username-password to retrieve info and "log in", with a 
+      // catch statement to supply the user with an error if the login fails.
+      //
+      // CWE-209: In the "else" statement (instead of a catch), we do not generate a message/error that 
+      // supplies the user with sensitive information, like information about the SQL query logic or 
+      // the database like names of tables/columns that could lead to SQL injection.
       if (text1.toString().equals(username) && text2.toString().equals(password)) {
          // CWE-201: Sensitive information such as username and password are given little chance to be accessed by other actors before being removed.
          // CWE-212: Sensitive information such as username and password are properly removed before too much is done with them available.

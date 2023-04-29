@@ -1,19 +1,5 @@
 RECEIPT
 
 Title: The Great Gatsby by F. Scott Fitzgerald
-RETURN: 2023-05-08
-
-Title: The Great Gatsby by F. Scott Fitzgerald
-RETURN: 2023-05-08
-
-Title: Fahrenheit 451 by Ray Bradbury
-RETURN: 2023-05-08
-
-RECEIPT
-
-Title: Fahrenheit 451 by Ray Bradbury
-RETURN: 2023-05-08
-
-Title: The Great Gatsby by F. Scott Fitzgerald
-RETURN: 2023-05-08
+RETURN BY: 2023-05-12
 

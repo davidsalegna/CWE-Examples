@@ -66,5 +66,33 @@ public class RandomGenerator {
             testArray[a] = tempArray[a];
             System.out.println("Number at index " + a + ": " + testArray[a]);
         }
+
+        // CWE 366: Spawns a new thread and demonstrates utilizing generateRandom() to generate more random numbers using the thread.
+        // This thread does not access or modify shared data and the order of execution does not determine the behavior of the program: no race condition.
+        Thread t = new Thread(new RandomGeneratorThread(5));
+        // CWE-191: Use of start() instead of run() to call thread
+        // CWE-366: No race condition within thread
+        t.start();
+    }
+
+    private static class RandomGeneratorThread implements Runnable 
+    {
+        private int numIterations;
+
+        public RandomGeneratorThread(int numIterations) 
+        {
+            this.numIterations = numIterations;
+        }
+
+        public void run() 
+        {
+            System.out.println("\nNew thread created!");
+            System.out.println(this.numIterations + " iterations of random numbers using generateRandom():");
+            RandomGenerator generator = new RandomGenerator();
+            for (int i = 0; i < numIterations; i++) 
+            {
+                generator.generateRandom();
+            }
+        }
     }
 }
