@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 int n;
 
@@ -125,13 +126,14 @@ int main() {
     // CWE-128: Because the bounds are restricted, wraparound error cannot occur
     for (int i = 0; i < n; i++) {
         printf("[%d]: ", i);
-        scanf("%d", num);
+        
+        scanf("%d", &num);
         // CWE-122: Proper check for heap-based overflow
-        if(-INT_MAX < num < INT_MAX){
+        if(INT_MIN <= num && num <= INT_MAX) {
             arr[i] = num;
-        //Will simply add filler number 1 if not valid integer for input
-        }else{
-            arr[i];
+        // Will simply add filler number 1 if not valid integer for input
+        } else {
+            arr[i] = 1;
         }
     }
 

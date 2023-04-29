@@ -1,11 +1,8 @@
 RECEIPT:
 
 The Great Gatsby
-RETURN BY: 2023/5/9
-
-The Great Gatsby
-RETURN BY: 2023/5/9
+RETURN BY: 2023/5/12
 
 Fahrenheit 451
-RETURN BY: 2023/5/9
+RETURN BY: 2023/5/12
 
